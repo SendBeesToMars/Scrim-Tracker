@@ -1,11 +1,10 @@
 import tkinter as tk
+import keyboard
 
 HEIGH = 300
 WIDTH = 500
 
-team_name1 = "bho"
-team_name2 = "dig"
-
+# background colours
 lred = "#bbddee"
 lblue = "#ff8888"
 red = "#8888ff"
@@ -36,21 +35,28 @@ entry_team1 = tk.Entry(frame1, font="Helvetica 12 bold", bg=red, justify="center
 placeholder_team2 = tk.StringVar(root, "Tag2")
 entry_team2 = tk.Entry(frame2, font="Helvetica 12 bold", bg=blue, justify="center", textvariable=placeholder_team2)
 
-entry_team1.grid(row = 0, column = 0, columnspan=3) 
-entry_team2.grid(row = 0, column = 1, columnspan=3) 
+entry_team1.grid(row = 0, column = 0, columnspan=3)
+entry_team2.grid(row = 0, column = 3, columnspan=3)
+
+def get_alias():
+    alias1 = entry_team1.get()
+    alias2 = entry_team2.get()
+    print(alias1, alias2)
 
 def display_player_stats(player_info, frame, row):
     print(str(frame))
     if str(frame) == ".!frame":
         bg = lred
+        col = 0
     else:
         bg = lblue
+        col = 3
     name = tk.Label(frame, text=player_info["name"], bg=bg)
-    name.grid(row=row, column=0)
+    name.grid(row=row, column=col)
     k = tk.Label(frame, text=player_info["kills"], bg=bg)
-    k.grid(row=row, column=1)
+    k.grid(row=row, column=col + 1)
     d = tk.Label(frame, text=player_info["deaths"], bg=bg)
-    d.grid(row=row, column=2)
+    d.grid(row=row, column=col + 2)
 
 # right side
 player_name = tk.Label(frame1, text="Name", bg=lred, font="bold")
@@ -61,11 +67,11 @@ player_d = tk.Label(frame1, text="D", bg=lred, font="bold")
 player_d.grid(row=2, column=2)
 
 # left side
-player_name = tk.Label(frame1, text="Name", bg=lred, font="bold")
+player_name = tk.Label(frame2, text="Name", bg=lblue, font="bold")
 player_name.grid(row=2, column=3)
-player_k = tk.Label(frame1, text="K", bg=lred, font="bold")
+player_k = tk.Label(frame2, text="K", bg=lblue, font="bold")
 player_k.grid(row=2, column=4)
-player_d = tk.Label(frame1, text="D", bg=lred, font="bold")
+player_d = tk.Label(frame2, text="D", bg=lblue, font="bold")
 player_d.grid(row=2, column=5)
 
 display_player_stats(players["001"], frame1, 3)
@@ -82,6 +88,9 @@ display_player_stats(players["001"], frame2, 6)
 display_player_stats(players["001"], frame2, 7)
 display_player_stats(players["001"], frame2, 8)
 
+alias1 = ""
+alias2 = ""
+keyboard.add_hotkey("enter", get_alias)
 
 root.mainloop()
 
